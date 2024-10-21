@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./landing/home";
+import Burger from './Burger';
+import Cart from "./Cart";
+import { ProductsData } from "./DataContext";
 
 const App = () => {
   return (
     <Router>
-      <div>
-        <header className="header">
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <header className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
           <nav
             className="navbar navbar-expand-lg navbar-light bg-warning w-100"
             style={{
@@ -25,7 +28,7 @@ const App = () => {
                   fontWeight: 400,
                 }}
               >
-               <b> What A Burger </b>
+                <b> What A Burger </b>
               </Link>
               <button
                 className="navbar-toggler"
@@ -111,14 +114,18 @@ const App = () => {
             </div>
           </nav>
         </header>
-
-        <Routes>
-          <Route path='/' element={<Home/>} />
-        </Routes>
-
+        <main style={{ flex: 1 }}>
+          <ProductsData>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='/burger' element={<Burger />} />
+            </Routes>
+          </ProductsData>
+        </main>
         <footer
           className="bg-warning text-white py-4"
-          style={{ marginBottom: "0%" }}
+          style={{ position: 'sticky', bottom: 0, zIndex: 1000 }}
         >
           <div className="container">
             <div className="row">
@@ -173,10 +180,10 @@ const App = () => {
               </div>
             </div>
             <div className="text-center mt-4">
-              &copy; 2024 What a Burger. All rights reserved.
+              © 2024 What a Burger. All rights reserved.
             </div>
           </div>
-        </footer>  bn 
+        </footer>
       </div>
     </Router>
   );
