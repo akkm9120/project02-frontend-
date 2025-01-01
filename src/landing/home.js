@@ -76,7 +76,7 @@ export default function Home(){
            <div className="col-md-4 mb-3">
              <div className="card h-100">
                <img
-                 src="[Image URL of burger]"
+                 src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600]"
                  className="card-img-top"
                  alt="Delicious Burger" />
                <div className="card-body">
@@ -94,7 +94,7 @@ export default function Home(){
            <div className="col-md-4 mb-3">
              <div className="card h-100">
                <img
-                 src="[Image URL of pizza]"
+                 src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600"
                  className="card-img-top"
                  alt="Hot and Cheesy Pizza" />
                <div className="card-body">
@@ -112,7 +112,7 @@ export default function Home(){
            <div className="col-md-4 mb-3">
              <div className="card h-100">
                <img
-                 src="[Image URL of soft drinks]"
+                 src="https://images.pexels.com/photos/1148215/pexels-photo-1148215.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
                  className="card-img-top"
                  alt="Refreshing Drinks" />
                <div className="card-body">

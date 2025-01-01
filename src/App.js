@@ -1,35 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./landing/home";
-import Burger from './Burger';
+import Burger from "./Burger";
+import { CartProvider } from './CartContext';
 import Cart from "./Cart";
 import { ProductsData } from "./DataContext";
 
 const App = () => {
+  const [theme, setTheme] = useState({
+    primary: "warning",
+    text: "dark",
+    navBg: "warning"
+  });
+
+  const themes = {
+    default: { primary: "warning", text: "dark", navBg: "warning" },
+    dark: { primary: "dark", text: "light", navBg: "white" },
+    light: { primary: "light", text: "dark", navBg: "dark" },
+    colorful: { primary: "info", text: "dark", navBg: "info" }
+  };
+
+  const changeTheme = (selectedTheme) => {
+    setTheme(themes[selectedTheme]);
+  };
+
   return (
     <Router>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <header className="header" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
-          <nav
-            className="navbar navbar-expand-lg navbar-light bg-warning w-100"
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <header className="header" style={{ position: "sticky", top: 0, zIndex: 1000 }}>
+          <nav className={`navbar navbar-expand-lg navbar-${theme.text} bg-${theme.navBg} w-100`}
             style={{
               borderRadius: "5px",
               boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.25)",
-            }}
-          >
+            }}>
             <div className="container">
-              <Link
-                className="navbar-brand"
-                to="/"
-                style={{
-                  fontFamily: "'Roboto', sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <Link className="navbar-brand" to="/">
                 <b> What A Burger </b>
               </Link>
+
+              {/* Theme Switcher Dropdown */}
+              <div className="me-3">
+                <select
+                  className="form-select"
+                  onChange={(e) => changeTheme(e.target.value)}
+                  style={{ width: "120px" }}
+                >
+                  <option value="default">Default</option>
+                  <option value="dark">Dark</option>
+                  <option value="light">Light</option>
+                  <option value="colorful">Colorful</option>
+                </select>
+              </div>
+
               <button
                 className="navbar-toggler"
                 type="button"
@@ -108,25 +132,33 @@ const App = () => {
                         Contact Us
                       </Link>
                     </li>
+                    <li className="nav-item" style={{ borderRadius: "20px" }}>
+                      <Link className="nav-link" to="/cart" style={{ borderRadius: "20px" }}>
+                        <i className="bi bi-cart3"></i> Cart
+                      </Link>
+                    </li>
+
                   </ul>
                 </div>
               </div>
             </div>
           </nav>
         </header>
+
         <main style={{ flex: 1 }}>
-          <ProductsData>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/cart' element={<Cart />} />
-              <Route path='/burger' element={<Burger />} />
-            </Routes>
-          </ProductsData>
+          <CartProvider>
+            <ProductsData>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/burger" element={<Burger />} />
+              </Routes>
+            </ProductsData>
+          </CartProvider>
         </main>
-        <footer
-          className="bg-warning text-white py-4"
-          style={{ position: 'sticky', bottom: 0, zIndex: 1000 }}
-        >
+
+        <footer className={`bg-${theme.primary} text-${theme.text === 'dark' ? 'dark' : 'white'} py-4`}
+          style={{ position: "sticky", bottom: 0, zIndex: 1000 }}>
           <div className="container">
             <div className="row">
               <div className="col-md-4">
@@ -142,13 +174,13 @@ const App = () => {
               <div className="col-md-4">
                 <h5>Follow Us</h5>
                 <div className="d-flex justify-content-start">
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                     <i className="bi bi-facebook"></i>
                   </a>
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                     <i className="bi bi-twitter"></i>
                   </a>
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                     <i className="bi bi-instagram"></i>
                   </a>
                 </div>

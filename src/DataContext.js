@@ -13,7 +13,7 @@ export const ProductsData = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://3000-akkm9120-scpt02lazy-csbi6tkmnji.ws-us116.gitpod.io/api/products`);
+        const response = await axios.get(`https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/products`);
         // console.log(response.data.products);
         setData(response.data.products);
         setLoading(false);
