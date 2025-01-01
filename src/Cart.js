@@ -87,7 +87,7 @@ const Cart = () => {
                 <span>${calculateTotal()}</span>
               </div>
               <button className="btn btn-warning w-100 mt-3">
-                Proceed to Checkout
+                Place Order 
               </button>
             </div>
           </div>

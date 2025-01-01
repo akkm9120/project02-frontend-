@@ -28,13 +28,13 @@ export default function Home(){
          </p>
        </div>
        <div className="d-flex gap-2 mt-4">
-         <Link to="/burger" className="btn btn-info">
+         <Link to="/menu" className="btn btn-info">
            Order Burgers
          </Link>
-         <Link to="/pizza" className="btn btn-info">
+         <Link to="/menu" className="btn btn-info">
            Order Pizzas
          </Link>
-         <Link to="/drinks" className="btn btn-info">
+         <Link to="/menu" className="btn btn-info">
            Order Drinks
          </Link>
        </div>
@@ -57,10 +57,7 @@ export default function Home(){
          <Link to="/wishlist" className="btn btn-light">
            <i className="bi bi-heart-fill"></i> Your Wishlist
          </Link>
-         <Link to="/cart" className="btn btn-primary me-5">
-           <i className="bi bi-cart-fill"></i> My Cart{' '}
-           <span className="badge bg-danger rounded-pill">2</span>
-         </Link>
+       
        </div>
      </div><div className="container my-5 overflow-auto">
        <section className="hero-image">

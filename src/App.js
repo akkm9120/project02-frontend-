@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./landing/home";
 import Burger from "./Burger";
-import { CartProvider } from './CartContext';
+import { CartProvider, useCart } from "./CartContext";
 import Cart from "./Cart";
 import { ProductsData } from "./DataContext";
 
 const App = () => {
+  const { getCartCount } = useCart();
+
+
   const [theme, setTheme] = useState({
     primary: "warning",
     text: "dark",
-    navBg: "warning"
+    navBg: "warning",
   });
 
   const themes = {
     default: { primary: "warning", text: "dark", navBg: "warning" },
     dark: { primary: "dark", text: "light", navBg: "white" },
     light: { primary: "light", text: "dark", navBg: "dark" },
-    colorful: { primary: "info", text: "dark", navBg: "info" }
+    colorful: { primary: "info", text: "dark", navBg: "info" },
   };
 
   const changeTheme = (selectedTheme) => {
@@ -28,13 +31,20 @@ const App = () => {
 
   return (
     <Router>
-      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <header className="header" style={{ position: "sticky", top: 0, zIndex: 1000 }}>
-          <nav className={`navbar navbar-expand-lg navbar-${theme.text} bg-${theme.navBg} w-100`}
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <header
+          className="header"
+          style={{ position: "sticky", top: 0, zIndex: 1000 }}
+        >
+          <nav
+            className={`navbar navbar-expand-lg navbar-${theme.text} bg-${theme.navBg} w-100`}
             style={{
               borderRadius: "5px",
               boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.25)",
-            }}>
+            }}
+          >
             <div className="container">
               <Link className="navbar-brand" to="/">
                 <b> What A Burger </b>
@@ -66,78 +76,51 @@ const App = () => {
               >
                 <span className="navbar-toggler-icon"></span>
               </button>
-              <div
-                className="collapse navbar-collapse justify-content-end"
-                id="navbarNav"
-              >
+              <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <div className="sub-container">
-                  <ul
-                    className="navbar-nav"
-                    style={{
-                      fontFamily: "'Lato', sans-serif",
-                      fontWeight: 300,
-                    }}
-                  >
+                  <ul className="navbar-nav" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link
-                        className="nav-link"
-                        to="/"
-                        style={{ borderRadius: "20px" }}
-                      >
+                      <Link className="nav-link" to="/" style={{ borderRadius: "20px" }}>
                         Home
                       </Link>
                     </li>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link
-                        className="nav-link"
-                        to="/burger"
-                        style={{ borderRadius: "20px" }}
-                      >
+                      <Link className="nav-link" to="/menu" style={{ borderRadius: "20px" }}>
                         Burger
                       </Link>
                     </li>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link
-                        className="nav-link"
-                        to="/pizza"
-                        style={{ borderRadius: "20px" }}
-                      >
+                      <Link className="nav-link" to="/pizza" style={{ borderRadius: "20px" }}>
                         Pizza
                       </Link>
                     </li>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link
-                        className="nav-link"
-                        to="/drinks"
-                        style={{ borderRadius: "20px" }}
-                      >
+                      <Link className="nav-link" to="/drinks" style={{ borderRadius: "20px" }}>
                         Cold Drinks
                       </Link>
                     </li>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link
-                        className="nav-link"
-                        to="/about-us"
-                        style={{ borderRadius: "20px" }}
-                      >
+                      <Link className="nav-link" to="/about-us" style={{ borderRadius: "20px" }}>
                         About Us
                       </Link>
                     </li>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link
-                        className="nav-link"
-                        to="/contact-us"
-                        style={{ borderRadius: "20px" }}
-                      >
+                      <Link className="nav-link" to="/contact-us" style={{ borderRadius: "20px" }}>
                         Contact Us
                       </Link>
                     </li>
                     <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/cart" style={{ borderRadius: "20px" }}>
+                      <Link className="nav-link position-relative" to="/cart" style={{ borderRadius: "20px" }}>
                         <i className="bi bi-cart3"></i> Cart
+                        {getCartCount() > 0 && (
+                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {getCartCount()}
+                            <span className="visually-hidden">items in cart</span>
+                          </span>
+                        )}
                       </Link>
                     </li>
-
+                   
                   </ul>
                 </div>
               </div>
@@ -146,19 +129,19 @@ const App = () => {
         </header>
 
         <main style={{ flex: 1 }}>
-          <CartProvider>
+         
             <ProductsData>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/burger" element={<Burger />} />
+                <Route path="/menu" element={<Burger />} />
               </Routes>
             </ProductsData>
-          </CartProvider>
+         
         </main>
 
-        <footer className={`bg-${theme.primary} text-${theme.text === 'dark' ? 'dark' : 'white'} py-4`}
-          style={{ position: "sticky", bottom: 0, zIndex: 1000 }}>
+        <footer className={`bg-${theme.primary} text-${theme.text === "dark" ? "dark" : "white"} py-4`}>
+
           <div className="container">
             <div className="row">
               <div className="col-md-4">
