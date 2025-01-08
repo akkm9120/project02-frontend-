@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/project02-frontend-/static/css/main.d29f27de.css",
-    "main.js": "/project02-frontend-/static/js/main.044cdc04.js",
-    "static/js/453.547feea4.chunk.js": "/project02-frontend-/static/js/453.547feea4.chunk.js",
-    "static/media/bootstrap-icons.woff?": "/project02-frontend-/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
-    "static/media/bootstrap-icons.woff2?": "/project02-frontend-/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
-    "index.html": "/project02-frontend-/index.html",
-    "main.d29f27de.css.map": "/project02-frontend-/static/css/main.d29f27de.css.map",
-    "main.044cdc04.js.map": "/project02-frontend-/static/js/main.044cdc04.js.map",
-    "453.547feea4.chunk.js.map": "/project02-frontend-/static/js/453.547feea4.chunk.js.map"
+    "main.css": "/static/css/main.4b6b11e0.css",
+    "main.js": "/static/js/main.7cd36a18.js",
+    "static/js/453.547feea4.chunk.js": "/static/js/453.547feea4.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "index.html": "/index.html",
+    "main.4b6b11e0.css.map": "/static/css/main.4b6b11e0.css.map",
+    "main.7cd36a18.js.map": "/static/js/main.7cd36a18.js.map",
+    "453.547feea4.chunk.js.map": "/static/js/453.547feea4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d29f27de.css",
-    "static/js/main.044cdc04.js"
+    "static/css/main.4b6b11e0.css",
+    "static/js/main.7cd36a18.js"
   ]
 }
