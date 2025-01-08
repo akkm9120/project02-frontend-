@@ -3,6 +3,9 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+
+ 
+
   // Initialize cart from localStorage if available
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem('cart');
@@ -71,6 +74,7 @@ export const CartProvider = ({ children }) => {
       getCartTotal,
       getCartCount,
       clearCart
+      
     }}>
       {children}
     </CartContext.Provider>

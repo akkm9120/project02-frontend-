@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./landing/home";
 import Burger from "./Burger";
-import { CartProvider, useCart } from "./CartContext";
+import {useCart } from "./CartContext";
 import Cart from "./Cart";
 import { ProductsData } from "./DataContext";
+import History from "./History";
 
 const App = () => {
   const { getCartCount } = useCart();
@@ -120,6 +121,12 @@ const App = () => {
                         )}
                       </Link>
                     </li>
+
+                    <li className="nav-item" style={{ borderRadius: "20px" }}>
+                      <Link className="nav-link" to="/order-history" style={{ borderRadius: "20px" }}>
+                        Order History
+                      </Link>
+                    </li>
                    
                   </ul>
                 </div>
@@ -135,6 +142,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/menu" element={<Burger />} />
+                <Route path="/order-history" element={<History/>} />
               </Routes>
             </ProductsData>
          
