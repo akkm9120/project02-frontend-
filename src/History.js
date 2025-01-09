@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { DataContext } from './DataContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 const History = () => {
   const { historyData, setHistoryData, loading, error } = useContext(DataContext);
@@ -13,35 +14,37 @@ const History = () => {
     console.log("Updating order:", orderId);
   };
 
+
   const handleRemoveOrder = async (orderId) => {
-    if (window.confirm('Are you sure you want to delete this order?')) {
-      try {
-        const response = await fetch(
-          `https://akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders/delete/${orderId}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            credentials: 'include'
+      if (window.confirm('Are you sure you want to delete this order?')) {
+          try {
+              const response = await axios.delete(
+                  `https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders/delete/${orderId}`,
+                  {
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      withCredentials: true
+                  }
+              );
+  
+              if (response.status === 200) {
+                  // Update the state to remove the deleted order
+                  setHistoryData(prevData => ({
+                      ...prevData,
+                      orders: prevData.orders.filter(order => order.order_id !== orderId)
+                  }));
+              } else {
+                  throw new Error('Failed to delete order');
+              }
+  
+          } catch (error) {
+              console.error('Delete Error:', error);
+              alert('Failed to delete order. Please try again.');
           }
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to delete order');
-        }
-
-        setHistoryData(prevData => ({
-          ...prevData,
-          orders: prevData.orders.filter(order => order.order_id !== orderId)
-        }));
-
-      } catch (error) {
-        console.error('Delete Error:', error);
-        alert('Failed to delete order. Please try again.');
       }
-    }
   };
+  
 
   return (
     <div className="container mt-4">
