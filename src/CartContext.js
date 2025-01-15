@@ -4,8 +4,6 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 
- 
-
   // Initialize cart from localStorage if available
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem('cart');

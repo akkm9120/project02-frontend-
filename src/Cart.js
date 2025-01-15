@@ -1,7 +1,9 @@
-import React from "react";
+import React, {  useContext  } from 'react';
 import { useCart } from "./CartContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { DataContext } from './DataContext';
+
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCart();
@@ -53,6 +55,7 @@ const CartItem = ({ item }) => {
 };
 
 const Cart = () => {
+ 
   const { cartItems } = useCart();
   const [deliveryDetails, setDeliveryDetails] = React.useState({
     date: "",
@@ -61,7 +64,8 @@ const Cart = () => {
   });
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
-  const navigate = useNavigate();
+  const { triggerOrdersRefresh } = useContext(DataContext);
+ 
 
   const calculateTotal = () => {
     return cartItems
@@ -89,23 +93,23 @@ const Cart = () => {
 
     try {
       const orderData = {
-        orderdate: new Date().toISOString(),
-        totalcost: parseFloat(calculateTotal()),
-        deliveryDate: date,
-        deliveryTime: time,
-        deliveryAddress: address,
+        order_date: new Date().toISOString().split("T")[0],
+        total_cost: parseFloat(calculateTotal()),
+        delivery_date: date,
+        delivery_time: time,
+        delivery_address: address,
         orderItemsData: cartItems.map(item => ({
-          product_id: item.product.id,
+          order_item_id: item.product.id,
           product_name: item.product.name,
           quantity: item.quantity,
           price_per_unit: item.product.cost,
           subtotal: item.product.cost * item.quantity,
         }))
       };
-
+     
       const response = await axios.post(
         "https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders",
-        orderData,
+        JSON.stringify(orderData),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true
@@ -113,7 +117,7 @@ const Cart = () => {
       );
 
       if (response.data.success) {
-        navigate("/order-history");
+        triggerOrdersRefresh();
       }
     } catch (error) {
       setError(error.response?.data?.message || "Failed to place order");

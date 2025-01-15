@@ -5,24 +5,14 @@ export const DataContext = createContext();
 
 export const ProductsData = ({ children }) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+ const [loading,setLoading] =useState(true);
   const [error, setError] = useState(null);
   const [historyData, setHistoryData] = useState({ orders: [] });
+  const [refreshOrders, setRefreshOrders] = useState(false);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(`https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders`);
-        setHistoryData({ orders: response.data.orders });
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, []);
+  const triggerOrdersRefresh = () => {
+    setRefreshOrders(prev => !prev);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,7 +30,7 @@ export const ProductsData = ({ children }) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{ data, loading, error, historyData, setHistoryData }}>
+    <DataContext.Provider value={{ data,loading,setLoading,setError, error, historyData, setHistoryData, refreshOrders, triggerOrdersRefresh }}>
       {children}
     </DataContext.Provider>
   );
