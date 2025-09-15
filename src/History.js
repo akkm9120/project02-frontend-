@@ -14,6 +14,38 @@ const History = () => {
     orderItemsData: [] // Ensure this is included
   });
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/orders`
+        );
+        
+        // Ensure we have valid data structure
+        const orders = response.data?.orders || [];
+        
+        // Validate and sanitize each order
+        const sanitizedOrders = orders.map(order => ({
+          ...order,
+          total_cost: order.total_cost || 0,
+          orderItems: Array.isArray(order.orderItems) ? order.orderItems : [],
+          order_date: order.order_date || new Date().toISOString(),
+          delivery_date: order.delivery_date || '',
+          delivery_time: order.delivery_time || '',
+          delivery_address: order.delivery_address || ''
+        }));
+        
+        setHistoryData({ orders: sanitizedOrders });
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        setError(err.message || 'Failed to fetch orders');
+        setHistoryData({ orders: [] }); // Set empty array to prevent crashes
+      }
+    };
+
+    fetchOrders();
+  }, [refreshOrders, setError, setHistoryData]);
+
   if (error) return <div>Error: {error}</div>;
   if (!historyData?.orders || !Array.isArray(historyData.orders))
     return <div>No orders available</div>;
@@ -37,7 +69,7 @@ const History = () => {
          console.log("this is updated one",updatedOrderData);
 
         const updateResponse = await axios.put(
-            `https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders/update/${orderId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/orders/update/${orderId}`,
             updatedOrderData,
             {
                 headers: {
@@ -64,26 +96,13 @@ const History = () => {
     }
 };
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(
-          `https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders`
-        );
-        setHistoryData({ orders: response.data.orders });
-      } catch (err) {
-        setError(err.message);
-      }
-    };
 
-    fetchOrders();
-  }, [refreshOrders]);
 
   const handleRemoveOrder = async (orderId) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       try {
         const response = await axios.delete(
-          `https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders/delete/${orderId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/orders/delete/${orderId}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -126,23 +145,23 @@ const History = () => {
           {historyData.orders.map((order) => (
             <tr key={order.order_id}>
               <td>{order.order_id}</td>
-              <td>{new Date(order.order_date).toLocaleDateString()}</td>
-              <td>${order.total_cost.toFixed(2)}</td>
+              <td>{order.order_date ? new Date(order.order_date).toLocaleDateString() : 'N/A'}</td>
+              <td>${order.total_cost ? Number(order.total_cost).toFixed(2) : '0.00'}</td>
               <td>
                 <div>
-                  Date: {new Date(order.delivery_date).toLocaleDateString()}
+                  Date: {order.delivery_date ? new Date(order.delivery_date).toLocaleDateString() : 'N/A'}
                 </div>
-                <div>Time: {order.delivery_time}</div>
-                <div>Address: {order.delivery_address}</div>
+                <div>Time: {order.delivery_time || 'N/A'}</div>
+                <div>Address: {order.delivery_address || 'N/A'}</div>
               </td>
               <td>
                 <ul className="list-unstyled">
-                  {order.orderItems.map((item) => (
+                  {order.orderItems && Array.isArray(order.orderItems) ? order.orderItems.map((item) => (
                     <li key={item.order_item_id}>
                       {item.quantity}x {item.product_name} ($
-                      {item.price_per_unit} each)
+                      {item.price_per_unit ? Number(item.price_per_unit).toFixed(2) : '0.00'} each)
                     </li>
-                  ))}
+                  )) : <li>No items found</li>}
                 </ul>
               </td>
               <td>

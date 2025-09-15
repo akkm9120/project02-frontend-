@@ -56,7 +56,7 @@ const CartItem = ({ item }) => {
 
 const Cart = () => {
  
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
   const [deliveryDetails, setDeliveryDetails] = React.useState({
     date: "",
     time: "",
@@ -64,6 +64,17 @@ const Cart = () => {
   });
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState("");
+
+  // Auto-dismiss success message after 5 seconds
+  React.useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
   const { triggerOrdersRefresh } = useContext(DataContext);
  
 
@@ -108,7 +119,7 @@ const Cart = () => {
       };
      
       const response = await axios.post(
-        "https://3000-akkm9120-sctp02projecte-xkk8z9ysyfb.ws-us117.gitpod.io/api/orders",
+        `${process.env.REACT_APP_API_BASE_URL}/api/orders`,
         JSON.stringify(orderData),
         {
           headers: { "Content-Type": "application/json" },
@@ -118,6 +129,10 @@ const Cart = () => {
 
       if (response.data.success) {
         triggerOrdersRefresh();
+        clearCart();
+        setDeliveryDetails({ date: "", time: "", address: "" });
+        setSuccessMessage("Order placed successfully! Your order has been confirmed.");
+        setError("");
       }
     } catch (error) {
       setError(error.response?.data?.message || "Failed to place order");
@@ -130,6 +145,17 @@ const Cart = () => {
     <div className="container mt-4">
       <h2 className="mb-4">Shopping Cart</h2>
       {error && <div className="alert alert-danger">{error}</div>}
+      {successMessage && (
+        <div className="alert alert-success alert-dismissible fade show" role="alert">
+          {successMessage}
+          <button 
+            type="button" 
+            className="btn-close" 
+            onClick={() => setSuccessMessage("")} 
+            aria-label="Close"
+          ></button>
+        </div>
+      )}
       <div className="row g-4">
         <div className="col-md-8">
           {cartItems.length === 0 ? (
