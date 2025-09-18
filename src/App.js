@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./modern-styles.css";
 import Home from "./landing/home";
 import Burger from "./Burger";
 import {useCart } from "./CartContext";
@@ -13,21 +14,31 @@ const App = () => {
   const { getCartCount } = useCart();
 
 
-  const [theme, setTheme] = useState({
-    primary: "warning",
-    text: "dark",
-    navBg: "warning",
-  });
+  const [currentTheme, setCurrentTheme] = useState("default");
 
-  const themes = {
-    default: { primary: "warning", text: "dark", navBg: "warning" },
-    dark: { primary: "dark", text: "light", navBg: "white" },
-    light: { primary: "light", text: "dark", navBg: "dark" },
-    colorful: { primary: "info", text: "dark", navBg: "info" },
+  const themeConfig = {
+    default: { 
+      navbarClass: "navbar-modern",
+      brandClass: "navbar-brand-modern"
+    },
+    dark: { 
+      navbarClass: "navbar-modern navbar-dark",
+      brandClass: "navbar-brand-modern"
+    },
+    light: { 
+      navbarClass: "navbar-modern navbar-light",
+      brandClass: "navbar-brand-modern"
+    },
+    colorful: { 
+      navbarClass: "navbar-modern navbar-colorful",
+      brandClass: "navbar-brand-modern"
+    },
   };
 
   const changeTheme = (selectedTheme) => {
-    setTheme(themes[selectedTheme]);
+    setCurrentTheme(selectedTheme);
+    // Apply theme-specific styles
+    document.body.className = `theme-${selectedTheme}`;
   };
 
   return (
@@ -40,22 +51,19 @@ const App = () => {
           style={{ position: "sticky", top: 0, zIndex: 1000 }}
         >
           <nav
-            className={`navbar navbar-expand-lg navbar-${theme.text} bg-${theme.navBg} w-100`}
-            style={{
-              borderRadius: "5px",
-              boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.25)",
-            }}
+            className={themeConfig[currentTheme].navbarClass}
           >
             <div className="container">
-              <Link className="navbar-brand" to="/">
-                <b> What A Burger </b>
+              <Link className={themeConfig[currentTheme].brandClass} to="/">
+                What A Burger
               </Link>
 
               {/* Theme Switcher Dropdown */}
               <div className="me-3">
                 <select
-                  className="form-select"
+                  className="form-select theme-selector"
                   onChange={(e) => changeTheme(e.target.value)}
+                  value={currentTheme}
                   style={{ width: "120px" }}
                 >
                   <option value="default">Default</option>
@@ -73,48 +81,48 @@ const App = () => {
                 aria-controls="navbarNav"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
-                style={{ borderRadius: "20px" }}
+                style={{ borderRadius: "12px" }}
               >
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <div className="sub-container">
-                  <ul className="navbar-nav" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/" style={{ borderRadius: "20px" }}>
-                        Home
+                  <ul className="navbar-nav" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/">
+                        <i className="bi bi-house me-1"></i> Home
                       </Link>
                     </li>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/menu" style={{ borderRadius: "20px" }}>
-                        Burger
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/menu">
+                        <i className="bi bi-shop me-1"></i> Burger
                       </Link>
                     </li>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/pizza" style={{ borderRadius: "20px" }}>
-                        Pizza
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/pizza">
+                        <i className="bi bi-circle me-1"></i> Pizza
                       </Link>
                     </li>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/drinks" style={{ borderRadius: "20px" }}>
-                        Cold Drinks
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/drinks">
+                        <i className="bi bi-cup-straw me-1"></i> Drinks
                       </Link>
                     </li>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/about-us" style={{ borderRadius: "20px" }}>
-                        About Us
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/about-us">
+                        <i className="bi bi-info-circle me-1"></i> About
                       </Link>
                     </li>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/contact-us" style={{ borderRadius: "20px" }}>
-                        Contact Us
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/contact-us">
+                        <i className="bi bi-envelope me-1"></i> Contact
                       </Link>
                     </li>
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link position-relative" to="/cart" style={{ borderRadius: "20px" }}>
-                        <i className="bi bi-cart3"></i> Cart
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern position-relative" to="/cart">
+                        <i className="bi bi-cart3 me-1"></i> Cart
                         {getCartCount() > 0 && (
-                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">
                             {getCartCount()}
                             <span className="visually-hidden">items in cart</span>
                           </span>
@@ -122,9 +130,9 @@ const App = () => {
                       </Link>
                     </li>
 
-                    <li className="nav-item" style={{ borderRadius: "20px" }}>
-                      <Link className="nav-link" to="/order-history" style={{ borderRadius: "20px" }}>
-                        Order History
+                    <li className="nav-item">
+                      <Link className="nav-link nav-link-modern" to="/order-history">
+                        <i className="bi bi-clock-history me-1"></i> Orders
                       </Link>
                     </li>
                    
@@ -148,41 +156,40 @@ const App = () => {
          
         </main>
 
-        <footer className={`bg-${theme.primary} text-${theme.text === "dark" ? "dark" : "white"} py-4`}>
-
+        <footer className="footer-modern">
           <div className="container">
             <div className="row">
               <div className="col-md-4">
-                <h5>Contact Us</h5>
+                <h5><i className="bi bi-geo-alt me-2"></i>Contact Us</h5>
                 <p>
                   123 Main Street, Anytown USA
                   <br />
-                  Phone: (123) 456-7890
+                  <i className="bi bi-telephone me-2"></i>Phone: (123) 456-7890
                   <br />
-                  Email: info@whataburger.com
+                  <i className="bi bi-envelope me-2"></i>Email: info@whataburger.com
                 </p>
               </div>
               <div className="col-md-4">
-                <h5>Follow Us</h5>
+                <h5><i className="bi bi-share me-2"></i>Follow Us</h5>
                 <div className="d-flex justify-content-start">
-                  <a href="" className="text-white me-3">
+                  <a href="https://facebook.com/whataburger" className="social-link" aria-label="Follow us on Facebook">
                     <i className="bi bi-facebook"></i>
                   </a>
-                  <a href="" className="text-white me-3">
+                  <a href="https://twitter.com/whataburger" className="social-link" aria-label="Follow us on Twitter">
                     <i className="bi bi-twitter"></i>
                   </a>
-                  <a href="" className="text-white me-3">
+                  <a href="https://instagram.com/whataburger" className="social-link" aria-label="Follow us on Instagram">
                     <i className="bi bi-instagram"></i>
                   </a>
                 </div>
               </div>
               <div className="col-md-4">
-                <h5>Newsletter</h5>
+                <h5><i className="bi bi-envelope-heart me-2"></i>Newsletter</h5>
                 <p>
                   Sign up for our newsletter to receive updates and special
                   offers.
                 </p>
-                <form>
+                <form className="form-modern">
                   <div className="input-group">
                     <input
                       type="email"
@@ -192,18 +199,19 @@ const App = () => {
                       aria-describedby="newsletter-btn"
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary-modern"
                       type="button"
                       id="newsletter-btn"
                     >
-                      Subscribe
+                      <i className="bi bi-send me-1"></i>Subscribe
                     </button>
                   </div>
                 </form>
               </div>
             </div>
-            <div className="text-center mt-4">
-              © 2024 What a Burger. All rights reserved.
+            <hr className="my-4" style={{ borderColor: 'rgba(255,255,255,0.2)' }} />
+            <div className="text-center">
+              <p className="mb-0">© 2024 What a Burger. All rights reserved. Made with <i className="bi bi-heart-fill text-danger"></i> for food lovers.</p>
             </div>
           </div>
         </footer>
