@@ -4,129 +4,70 @@ import { Link} from 'react-router-dom';
 
 
 export default function Home(){
-   return <><main className="container my-5">
-     <div className="row">
-       <div className="col main-content">
-         <h1
-           className="display-4 fw-bold mb-4"
-           style={{
-             color: '#eaa628',
-             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
-           }}
-         >
-           Mouthwatering Burgers, Savory Pizzas, and Refreshing Drinks
-         </h1>
-         <p
-           className="lead"
-           style={{
-             fontFamily: "'Roboto', sans-serif",
-             fontSize: '1.2rem',
-             color: '#333',
-           }}
-         >
-           Satisfy your cravings with our menu of high-quality ingredients and expert preparation. Indulge in the perfect balance of flavors and textures, from our juicy burgers to our delectable pizzas and thirst-quenching beverages.
-         </p>
-       </div>
-       <div className="d-flex gap-2 mt-4">
-         <Link to="/menu" className="btn btn-info">
-           Order Burgers
-         </Link>
-         <Link to="/menu" className="btn btn-info">
-           Order Pizzas
-         </Link>
-         <Link to="/menu" className="btn btn-info">
-           Order Drinks
-         </Link>
-       </div>
-     </div>
-   </main><div
-     className="container d-flex justify-content-between align-items-center py-3 rounded-pill"
-     id="threebtns"
-   >
-       <Link
-         to="/"
-         className="ms-5 d-flex align-items-center text-decoration-none"
-       >
-         <i className="bi bi-house-fill me-2"></i>
-         <span className="fw-bold">What a Burger</span>
-       </Link>
-       <div className="d-flex gap-2">
-         <Link to="/user" className="btn btn-light">
-           <i className="bi bi-person-fill"></i> Login
-         </Link>
-         <Link to="/wishlist" className="btn btn-light">
-           <i className="bi bi-heart-fill"></i> Your Wishlist
-         </Link>
-       
-       </div>
-     </div><div className="container my-5 overflow-auto">
-       <section className="hero-image">
-         <div className="container d-flex h-100 align-items-center justify-content-center">
-           <h2 className="display-4 text-white text-shadow">
-             The tastiest burgers, pizzas & drinks in town!
-           </h2>
-         </div>
-       </section>
-       <section className="container">
-         <h2 className="text-center mb-4">What's on the Menu?</h2>
-         <div className="row">
-           <div className="col-md-4 mb-3">
-             <div className="card h-100">
-               <img
-                 src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600]"
-                 className="card-img-top"
-                 alt="Delicious Burger" />
-               <div className="card-body">
-                 <h5 className="card-title">Juicy Burgers</h5>
-                 <p className="card-text">
-                   Made with fresh, high-quality ingredients. Choose from our
-                   classic cheeseburger, or build your own!
-                 </p>
-                 <Link to="/burger" className="btn btn-primary">
-                   View Burgers
-                 </Link>
-               </div>
+   return <>
+     {/* Hero Section */}
+      <section className="hero-section py-5">
+       <div className="container">
+         <div className="row align-items-center">
+           <div className="col-lg-6">
+             <h1 className="display-4 fw-bold mb-4 text-warning">
+               Delicious Fast Food Delivered Fresh
+             </h1>
+             <p className="lead mb-4 text-muted">
+               Satisfy your cravings with our menu of high-quality ingredients and expert preparation. From juicy burgers to refreshing drinks, we've got everything you need.
+             </p>
+             <div className="d-flex gap-3">
+               <Link to="/menu" className="btn btn-warning btn-lg px-4">
+                 <i className="bi bi-arrow-right me-2"></i>Order Now
+               </Link>
+               <Link to="/cart" className="btn btn-outline-warning btn-lg px-4">
+                 <i className="bi bi-cart3 me-2"></i>View Cart
+               </Link>
              </div>
            </div>
-           <div className="col-md-4 mb-3">
-             <div className="card h-100">
-               <img
-                 src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600"
-                 className="card-img-top"
-                 alt="Hot and Cheesy Pizza" />
-               <div className="card-body">
-                 <h5 className="card-title">Perfect Pizzas</h5>
-                 <p className="card-text">
-                   From classic pepperoni to gourmet creations, we have a
-                   pizza for every craving.
-                 </p>
-                 <Link to="/pizza" className="btn btn-primary">
-                   Explore Pizzas
-                 </Link>
-               </div>
-             </div>
-           </div>
-           <div className="col-md-4 mb-3">
-             <div className="card h-100">
-               <img
-                 src="https://images.pexels.com/photos/1148215/pexels-photo-1148215.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                 className="card-img-top"
-                 alt="Refreshing Drinks" />
-               <div className="card-body">
-                 <h5 className="card-title">Refreshing Drinks</h5>
-                 <p className="card-text">
-                   Pair your meal with a cold soda, ice tea, or one of our
-                   specialty drinks.
-                 </p>
-                 <Link to="/drink" className="btn btn-primary">
-                   See Drinks Menu
-                 </Link>
-               </div>
-             </div>
+           <div className="col-lg-6">
+             <img 
+               src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=600" 
+               alt="Delicious Burger" 
+               className="img-fluid rounded shadow"
+             />
            </div>
          </div>
-       </section>
-     </div>
+       </div>
+     </section>
+      
+      {/* Features Section */}
+      <section className="py-5">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="display-5 fw-bold text-warning">Why Choose Us?</h2>
+            <p className="lead text-muted">Fast, fresh, and delicious food delivered to your door</p>
+          </div>
+          <div className="row g-4">
+            <div className="col-md-4 text-center">
+               <div className="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3 feature-icon" style={{width: '80px', height: '80px'}}>
+                 <i className="bi bi-clock fs-2 text-dark"></i>
+               </div>
+               <h4 className="fw-bold">Fast Delivery</h4>
+               <p className="text-muted">Quick and reliable delivery to satisfy your hunger</p>
+             </div>
+             <div className="col-md-4 text-center">
+               <div className="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3 feature-icon" style={{width: '80px', height: '80px'}}>
+                 <i className="bi bi-heart fs-2 text-dark"></i>
+               </div>
+               <h4 className="fw-bold">Fresh Ingredients</h4>
+               <p className="text-muted">Made with the freshest, highest quality ingredients</p>
+             </div>
+             <div className="col-md-4 text-center">
+               <div className="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3 feature-icon" style={{width: '80px', height: '80px'}}>
+                 <i className="bi bi-star fs-2 text-dark"></i>
+               </div>
+               <h4 className="fw-bold">Great Taste</h4>
+               <p className="text-muted">Delicious flavors that will keep you coming back</p>
+             </div>
+          </div>
+        </div>
+      </section>
 
     </>
 

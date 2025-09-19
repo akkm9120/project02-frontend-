@@ -12,43 +12,45 @@ const Burger = () => {
 
   return (
     <div className="container mt-4">
-      <table className="table table-striped table-hover">
-        <thead className="thead-dark">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Cost</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Image</th>
-            <th>Tags</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(item => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>${item.cost}</td>
-              <td>{item.description}</td>
-              <td>{item.category.name}</td>
-              <td>
-                <img src={item.image_url} alt={item.name} style={{ width: '50px', height: '50px' }} />
-              </td>
-              <td>{item.tags.map(tag => tag.name).join(', ')}</td>
-              <td>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => addToCart(item)}
-                >
-                  <i className="bi bi-cart-plus"></i> Add to Cart
-                </button>
-              </td>
-            </tr>
-          ))}
-
-        </tbody>
-      </table>
+      <div className="text-center mb-4">
+        <h2 className="display-5 fw-bold text-warning">Our Menu</h2>
+        <p className="lead text-muted">Delicious food made with fresh ingredients</p>
+      </div>
+      <div className="row g-4">
+        {data.map(item => (
+          <div key={item.id} className="col-lg-4 col-md-6 col-sm-12">
+            <div className="card h-100 shadow-sm border-0">
+              <img 
+                src={item.image_url} 
+                alt={item.name} 
+                className="card-img-top" 
+                style={{ height: '200px', objectFit: 'cover' }}
+              />
+              <div className="card-body d-flex flex-column">
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                  <h5 className="card-title fw-bold">{item.name}</h5>
+                  <span className="badge bg-warning text-dark fs-6">${item.cost}</span>
+                </div>
+                <p className="card-text text-muted small mb-2">{item.description}</p>
+                <div className="mb-2">
+                  <span className="badge bg-light text-dark me-1">{item.category.name}</span>
+                  {item.tags.map((tag, index) => (
+                    <span key={index} className="badge bg-secondary me-1">{tag.name}</span>
+                  ))}
+                </div>
+                <div className="mt-auto">
+                  <button
+                    className="btn btn-warning w-100 fw-bold"
+                    onClick={() => addToCart(item)}
+                  >
+                    <i className="bi bi-cart-plus me-2"></i>Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

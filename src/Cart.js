@@ -27,28 +27,35 @@ const CartItem = ({ item }) => {
           <span className="badge bg-primary">${item.product.cost}</span>
         </div>
         <p className="text-muted">Category: {item.product.category.name}</p>
-        <form onSubmit={handleSubmit} className="d-flex align-items-center gap-2">
-          <div className="input-group" style={{ width: "150px" }}>
-            <input
-              className="form-control"
-              type="number"
-              min="1"
-              value={newQuantity}
-              onChange={handleQuantityChange}
-              name="newQuantity"
-            />
-            <button type="submit" className="btn btn-outline-primary">
-              Update
-            </button>
+        <div className="d-flex align-items-center justify-content-between mt-3">
+          <div className="d-flex align-items-center gap-3">
+            <span className="fw-bold">Quantity:</span>
+            <form onSubmit={handleSubmit} className="d-flex align-items-center gap-2">
+              <div className="input-group" style={{ width: "120px" }}>
+                <input
+                  className="form-control text-center fw-bold"
+                  type="number"
+                  min="1"
+                  value={newQuantity}
+                  onChange={handleQuantityChange}
+                  name="newQuantity"
+                  style={{ fontSize: "1.1rem" }}
+                />
+                <button type="submit" className="btn btn-warning">
+                  <i className="bi bi-check-lg"></i>
+                </button>
+              </div>
+            </form>
+            <span className="text-muted">× ${item.product.cost} = <strong>${(item.product.cost * newQuantity).toFixed(2)}</strong></span>
           </div>
           <button 
             type="button" 
             onClick={() => removeFromCart(item.product.id)} 
-            className="btn btn-outline-danger ms-2"
+            className="btn btn-outline-danger"
           >
-            Remove
+            <i className="bi bi-trash"></i> Remove
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
